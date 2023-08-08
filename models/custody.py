@@ -135,7 +135,7 @@ class HrCustody(models.Model):
     renew_return_date = fields.Boolean(default=False, copy=False)
     renew_reject = fields.Boolean(default=False, copy=False)
     state = fields.Selection([('draft', 'Draft'), ('to_approve', 'Waiting For Approval'), ('approved', 'Approved'),
-                              ('returned', 'Returned'), ('rejected', 'Refused')], string='Status', default='draft',
+                              ('returned', 'Returned'), ('rejected', 'Refused'),('cancel','Cancelled')], string='Status', default='draft',
                              track_visibility='always')
     mail_send = fields.Boolean(string="Mail Send")
 
@@ -182,6 +182,18 @@ class HrPropertyName(models.Model):
             self: self.env.user.company_id.currency_id.id,
             readonly=True)
     purchase_price = fields.Monetary(string="Purchase Price")
+    is_scrap = fields.Boolean(string="Is Scrap")
+    scrap_money = fields.Monetary(string="Scrap Credit")
+    scrap_reason = fields.Text(string="Scrap Reason")
+    scrap_date = fields.Date(string="Scrap Date")
+    def _compute_report_ids(self):
+        for record in self:
+            record.custody_report_ids = self.env['report.custody'].search([('custody_name','=',record.id)])
+    custody_report_ids = fields.One2many('report.custody','custody_name',string="Custody Reports")
+    def _compute_repair_ids(self):
+        for record in self:
+            record.repair_ids = self.env['custody.property.repair'].search([('property_id','=',record.id)])
+    repair_ids = fields.One2many('custody.property.repair','property_id',string="Repairs",compute="_compute_repair_ids")
 
 
     # def _compute_read_only(self):
@@ -193,6 +205,42 @@ class HrPropertyName(models.Model):
     #     else:
     #         self.read_only = False
 
+    def cancel_requests(self):
+        custody_reqs = self.env['hr.custody'].search([('custody_name','=',self.id),('state','in',('draft','to_approve'))])
+        if custody_reqs:
+            for req in custody_reqs:
+                req.write({
+                    'state':'cancel'
+                })
+    def convert_scrap(self):
+        custody_reqs = self.env['hr.custody'].search([('custody_name','=',self.id),('state','in',('draft','to_approve'))])
+        if custody_reqs:
+            raise UserError("You have to cancel all custody requests in Draft and Waiting Approval states before turning a property into scrap")
+        custody_reqs = self.env['hr.custody'].search([('custody_name','=',self.id),('state','=','approved')])
+        if custody_reqs:
+            raise UserError("Approved properties have to be returned before turning into scrap")
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Convert to Scrap',
+            'res_model': 'property.scrap.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'property_id': self.id,
+            }
+        }
+
+    def add_repair_record(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Create Repair Record',
+            'res_model': 'property.repair.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'property_id': self.id,
+            }
+        }
     @api.onchange('property_selection')
     def onchange_property_selection(self):
         if self.property_selection == 'asset':

@@ -40,7 +40,10 @@
         'views/hr_custody_notification.xml',
         'views/hr_employee_view.xml',
         'views/notification_mail.xml',
-        'reports/custody_report.xml'
+        'reports/custody_report.xml',
+        'wizard/repair_wizard_views.xml',
+        'wizard/scrap_property_wizard_views.xml',
+
     ],
     'demo': ['data/demo_data.xml'],
     'images': ['static/description/banner.png'],

@@ -11,13 +11,44 @@
              </field>
         </record>
 
+        <record id="view_report_custody_tree" model="ir.ui.view">
+            <field name="name">report.custody.tree</field>
+            <field name="model">report.custody</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="custody_name"/>
+                    <field name="date_request"/>
+                    <field name="employee"/>
+                    <field name="purpose"/>
+                    <field name="return_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="custody_search" model="ir.ui.view">
+            <field name="name">report.custody.search</field>
+            <field name="model">report.custody</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!-- <filter string="Paid" name="active" domain="[('state', '=','paid')]"/> -->
+                    <!-- <group expand="0" string="Group By">
+                        <filter string="Property" name="custody_name" context="{'group_by': 'custody_name'}"/>
+                    </group> -->
+                    <filter name="group_property_id" string="Property" context="{'group_by':'custody_name'}"/>
+                </search>
+            </field>
+        </record>
+
         <record id="action_report_custody" model="ir.actions.act_window">
             <field name="name">Custody Analysis</field>
             <field name="res_model">report.custody</field>
-            <field name="view_mode">pivot</field>
-            <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="context">{'group_by_no_leaf':1,'group_by':[],'group_by_custody_name':1,'search_default_group_property_id':1}</field>
             <field name="help">This report allows you to analyse all Custody Requests. </field>
         </record>
+
+    
 
         <menuitem name="Report" id="menu_custody_report"
                   groups="hr.group_hr_manager"
