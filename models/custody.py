@@ -69,6 +69,14 @@ class HrCustody(models.Model):
     def sent(self):
         # if not self.return_date
         self.state = 'to_approve'
+        self.activity_schedule(
+            'hr_custody.mail_activity_type_custody_request',
+            custody_request = self.id,
+            user_id = self.hr_manager.id,
+            # date_deadline=self.payment_expect_date,
+            # is_pay_approve_request=True,
+            summary=f"Custody Request of {self.custody_name.name} from {self.env.user.name}"
+        )
 
     def send_mail(self):
         template = self.env.ref('hr_custody.custody_email_notification_template')
@@ -97,6 +105,7 @@ class HrCustody(models.Model):
         for custody in self.env['hr.custody'].search([('custody_name', '=', self.custody_name.id)]):
             if custody.state == "approved":
                 raise UserError(_("Custody is not available now"))
+        self.env['mail.activity'].search([('custody_request','=',self.id)],limit=1).unlink()
         self.state = 'approved'
 
     def set_to_return(self):
@@ -138,6 +147,10 @@ class HrCustody(models.Model):
                               ('returned', 'Returned'), ('rejected', 'Refused'),('cancel','Cancelled')], string='Status', default='draft',
                              track_visibility='always')
     mail_send = fields.Boolean(string="Mail Send")
+    def get_hr_manager_domain(self):
+        return [('id', 'in', self.env.ref('hr.group_hr_manager').users.ids)]
+    hr_manager = fields.Many2one('res.users',string="HR Manager",required=True,domain=get_hr_manager_domain)
+
 
 
 class HrPropertyName(models.Model):

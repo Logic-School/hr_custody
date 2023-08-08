@@ -22,5 +22,7 @@ class WizardReason(models.TransientModel):
             else:
                 reject_obj.write({'state': 'rejected',
                                   'rejected_reason': self.reason})
+        self.env['mail.activity'].search([('custody_request','=',reject_obj.id)],limit=1).unlink()
+
 
     reason = fields.Text(string="Reason", help="Reason")

@@ -156,8 +156,9 @@
                             <group>
                                 <field name="read_only" invisible="1"/>
                                 <field name="employee" attrs="{'readonly': [('read_only','=',False)]}"/>
+                                <field name="hr_manager"/>
                                 <field name="custody_name" options="{'no_open':True,'no_create':True}"
-                                       domain="[('company_id','child_of',[company_id])]"/>
+                                       domain="[('company_id','child_of',[company_id]),('is_scrap','=',False)]"/>
                                 <field name="renew_return_date" invisible="1"/>
                                 <field name="renew_reject" invisible="1"/>
                                 <field name="mail_send" invisible="1"/>

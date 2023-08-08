@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="mail_activity_type_custody_request" model="mail.activity.type">
+            <field name="name">Custody Request</field>
+            <field name="res_model_id" ref="hr_custody.model_hr_custody"/>
+        </record>
+    </data>
+</odoo>

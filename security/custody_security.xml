@@ -14,6 +14,29 @@
         <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
 
+    <record id="hr_custody_user_access" model="ir.rule">
+        <field name="name">See and Modify Only His Requests</field>
+        <field name="model_id" ref="model_hr_custody"/>
+        <field name="domain_force">[('create_uid.id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>  
+
+    <record id="hr_custody_hr_manager_access" model="ir.rule">
+        <field name="name">See and Modify All Requests</field>
+        <field name="model_id" ref="model_hr_custody"/>
+        <field name="domain_force">[]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>  
+
+
 <!--    <record id="hr_custody_personal_rule_manager" model="ir.rule">-->
 <!--        <field name="name">Employee Resignation Manager</field>-->
 <!--        <field ref="hr_custody.model_hr_custody" name="model_id"/>-->

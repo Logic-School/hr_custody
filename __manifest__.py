@@ -43,6 +43,7 @@
         'reports/custody_report.xml',
         'wizard/repair_wizard_views.xml',
         'wizard/scrap_property_wizard_views.xml',
+        'data/activity.xml',
 
     ],
     'demo': ['data/demo_data.xml'],
