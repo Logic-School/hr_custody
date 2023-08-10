@@ -56,6 +56,7 @@
                                 <field name="company_id" options="{'no_create': True}"
                                        groups="base.group_multi_company"/>
                                 <field name="currency_id" invisible="1"/>
+                                <field name="current_user"/>
                                 <field name="purchase_price" widget="monetary"/>
                             </group>
                             <group>
@@ -215,6 +216,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="current_user"/>
                 </tree>
             </field>
         </record>

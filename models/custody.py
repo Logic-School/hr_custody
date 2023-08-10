@@ -195,6 +195,17 @@ class HrPropertyName(models.Model):
             self: self.env.user.company_id.currency_id.id,
             readonly=True)
     purchase_price = fields.Monetary(string="Purchase Price")
+    def _compute_current_user(self):
+        for record in self:
+            assigned=False
+            for report in record.custody_report_ids:
+                if report.state == 'approved':
+                    record.current_user = report.employee.id
+                    assigned=True
+                    break
+            if not assigned:
+                record.current_user = False
+    current_user = fields.Many2one('hr.employee',string="Current User",compute="_compute_current_user")
     is_scrap = fields.Boolean(string="Is Scrap")
     scrap_money = fields.Monetary(string="Scrap Credit")
     scrap_reason = fields.Text(string="Scrap Reason")
