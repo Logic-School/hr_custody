@@ -36,7 +36,7 @@
                     <header>
                         <button name="add_repair_record" type="object" string="Add Repair" class="oe_highlight" attrs="{'invisible':[('is_scrap','=',True)]}"/>
                         <button name="convert_scrap" type="object" string="Scrapify" class="oe_highlight" attrs="{'invisible':[('is_scrap','=',True)]}"/>
-                        <button name="cancel_requests" type="object" string="Cancel Requests" class="oe_highlight" attrs="{'invisible':[('is_scrap','=',True)]}" confirm="This will cancel all pending custody requests for this property" />
+                        <button name="cancel_requests" type="object" groups="hr.group_hr_manager" string="Cancel Requests" class="oe_highlight" attrs="{'invisible':[('is_scrap','=',True)]}" confirm="This will cancel all pending custody requests for this property" />
 
                     </header>
                     <sheet>
@@ -285,7 +285,7 @@
                   name="Custody Request" sequence="1"/>
 
         <menuitem action="action_hr_property" id="hr_property_menu" parent="hr_custody.hr_custody_main_menu"
-                  name="Property" sequence="5" groups="hr.group_hr_manager"/>
+                  name="Property" sequence="5" groups="hr.group_hr_manager,hr_custody.group_custody_property_admin"/>
 
         <menuitem action="action_hr_property_scrap" id="hr_scrap_menu" parent="hr_custody.hr_custody_main_menu"
                   name="Scraps" sequence="6" groups="hr.group_hr_manager"/>

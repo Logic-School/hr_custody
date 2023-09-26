@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="hr_custody_groups">
+            <field name="name">HR Custody</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="group_custody_property_admin" model="res.groups">
+            <field name="name">Property Administrator</field>
+            <field name="category_id" ref="hr_custody_groups"/>
+        </record>
+    </data>
+</odoo>
