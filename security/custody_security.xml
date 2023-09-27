@@ -1,8 +1,6 @@
 <?xml version="1.0" ?>
 <odoo>
 
-
-
     <record id="property_rule_custody" model="ir.rule">
         <field name="name">Custody Multi Company</field>
         <field name="model_id" ref="model_custody_property"/>
