@@ -13,6 +13,7 @@
 "access_wizard_reason","hr.wizard.reason","model_wizard_reason","hr.group_hr_manager",1,1,1,1
 
 
+"access_hr_custody_report_prop_admin","access_hr_custody_report_prop_admin","model_report_custody","hr_custody.group_custody_property_admin",1,1,1,1
 "access_property_property_admin","access_property_property_admin","model_custody_property","hr_custody.group_custody_property_admin",1,1,1,1
 access_repair_property_admin, access_repair_property_admin,model_custody_property_repair,hr_custody.group_custody_property_admin,1,1,1,1
 access_repair_wizard_property_admin,access_repair_wizard_property_admin,model_property_repair_wizard,hr_custody.group_custody_property_admin,1,1,1,0

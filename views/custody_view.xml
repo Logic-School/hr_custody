@@ -49,6 +49,7 @@
                         </div>
                         <group>
                             <group>
+                                <field name="serial_no"/>
                                 <field name="is_scrap" invisible="1"/>
                                 <field name="property_selection" widget="radio"/>
                                 <field name="product_id"
@@ -215,6 +216,7 @@
             <field name="model">custody.property</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="serial_no"/>
                     <field name="name"/>
                     <field name="current_user"/>
                 </tree>

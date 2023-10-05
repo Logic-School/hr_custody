@@ -20,7 +20,7 @@ class HrCustody(models.Model):
         """ Use this function to check weather the user has the permission to change the employee"""
         res_user = self.env['res.users'].search([('id', '=', self._uid)])
         print(res_user.has_group('hr.group_hr_user'))
-        if res_user.has_group('hr.group_hr_user'):
+        if res_user.has_group('hr.group_hr_user') or res_user.has_group('hr_custody.group_custody_property_admin'):
             self.read_only = True
         else:
             self.read_only = False
@@ -130,7 +130,7 @@ class HrCustody(models.Model):
     employee = fields.Many2one('hr.employee', string='Employee', required=True, readonly=True, help="Employee",
                                default=lambda self: self.env.user.employee_id.id,
                                states={'draft': [('readonly', False)]})
-    purpose = fields.Char(string='Reason', track_visibility='always', required=True, readonly=True, help="Reason",
+    purpose = fields.Char(string='Reason', track_visibility='always', readonly=True, help="Reason",
                           states={'draft': [('readonly', False)]})
     custody_name = fields.Many2one('custody.property', string='Property', required=True, readonly=True,
                                    help="Property name",
@@ -161,6 +161,7 @@ class HrPropertyName(models.Model):
     _description = 'Property Name'
 
     name = fields.Char(string='Property Name', required=True)
+    serial_no = fields.Char(string="Serial No", required=True)
     image = fields.Image(string="Image",
                          help="This field holds the image used for this provider, limited to 1024x1024px")
     image_medium = fields.Binary(
