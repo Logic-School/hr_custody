@@ -289,6 +289,7 @@
         <menuitem action="action_hr_property" id="hr_property_menu" parent="hr_custody.hr_custody_main_menu"
                   name="Property" sequence="5" groups="hr.group_hr_manager,hr_custody.group_custody_property_admin"/>
 
+
         <menuitem action="action_hr_property_scrap" id="hr_scrap_menu" parent="hr_custody.hr_custody_main_menu"
                   name="Scraps" sequence="6" groups="hr.group_hr_manager"/>
     </data>

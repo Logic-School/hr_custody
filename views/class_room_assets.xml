@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_class_room_assets_form_view" model="ir.ui.view">
+        <field name="name">Class Room Assets</field>
+        <field name="model">class.room.assets</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Class Room Assets">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="record_class_room_assets" model="ir.ui.view">
+        <field name="name">Class Room Assets</field>
+        <field name="model">class.room.assets</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="class_room_assets_action">
+        <field name="name">Class Room Assets</field>
+        <field name="res_model">class.room.assets</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Class Room Assets"
+              id="class_room_assets_menu"
+              parent="hr_custody.hr_custody_main_menu"
+              action="class_room_assets_action"
+              sequence="10"/>
+
+
+</odoo>

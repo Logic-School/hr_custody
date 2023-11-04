@@ -21,3 +21,6 @@ access_repair_wizard_property_admin,access_repair_wizard_property_admin,model_pr
 access_repair_hr_manager,access_repair_hr_manager,model_custody_property_repair,hr.group_hr_manager,1,1,1,1
 access_repair_wizard_hr_manager, access_repair_wizard_hr_manager,model_property_repair_wizard,hr.group_hr_manager,1,1,1,0
 access_scrap_wizard_hr_manager, access_scrap_wizard_hr_manager,model_property_scrap_wizard,hr.group_hr_manager,1,1,1,0
+
+access_class_room_assets, access_class_room_assets,model_class_room_assets,hr.group_hr_manager,1,1,1,0
+access_class_room_assets_admin, access_class_room_assets,model_class_room_assets,group_custody_property_admin,1,1,1,0

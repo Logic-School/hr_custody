@@ -45,6 +45,7 @@
         'wizard/repair_wizard_views.xml',
         'wizard/scrap_property_wizard_views.xml',
         'data/activity.xml',
+        'views/class_room_assets.xml',
 
     ],
     'demo': ['data/demo_data.xml'],
