@@ -50,6 +50,7 @@
                         <group>
                             <group>
                                 <field name="serial_no"/>
+                                <field name="property_type"/>
                                 <field name="is_scrap" invisible="1"/>
                                 <field name="property_selection" widget="radio"/>
                                 <field name="product_id"
@@ -159,8 +160,9 @@
                                 <field name="read_only" invisible="1"/>
                                 <field name="employee" attrs="{'readonly': [('read_only','=',False)]}"/>
                                 <field name="hr_manager"/>
+                                <field name="property_type"/>
                                 <field name="custody_name" options="{'no_open':True,'no_create':True}"
-                                       domain="[('company_id','child_of',[company_id]),('is_scrap','=',False)]"/>
+                                       domain="[('company_id','child_of',[company_id]),('is_scrap','=',False),('property_type','=',property_type)]"/>
                                 <field name="renew_return_date" invisible="1"/>
                                 <field name="renew_reject" invisible="1"/>
                                 <field name="mail_send" invisible="1"/>
@@ -219,6 +221,18 @@
                     <field name="serial_no"/>
                     <field name="name"/>
                     <field name="current_user"/>
+                    <field name="property_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_property_type_tree_view" model="ir.ui.view">
+            <field name="name">hr_property_type.view.tree</field>
+            <field name="model">custody.property.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="property_count"/>
                 </tree>
             </field>
         </record>
@@ -240,6 +254,23 @@
                         <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Employee" name="employee" domain="[]" context="{'group_by':'employee'}"/>
                         <filter string="Custody Name" name="custody" domain="[]" context="{'group_by':'custody_name'}"/>
+                        <filter string="Property Type" name="property_type" domain="[]" context="{'group_by':'property_type'}"/>
+                        <filter string="Property" name="custody_name" domain="[]" context="{'group_by':'custody_name'}"/>
+
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_custody_property_search_view" model="ir.ui.view">
+            <field name="name">custody.property.search</field>
+            <field name="model">custody.property</field>
+            <field name="arch" type="xml">
+                <search string="Property">
+                    <field name="name"/>
+                    <field name="property_type"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Property Type" name="property_type" domain="[]" context="{'group_by':'property_type'}"/>
                     </group>
                 </search>
             </field>
@@ -276,6 +307,12 @@
             <field name="domain">[('is_scrap', '=', True)]</field>
         </record>
 
+        <record id="action_hr_property_type" model="ir.actions.act_window">
+            <field name="name">Property Types</field>
+            <field name="res_model">custody.property.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <menuitem id="hr_custody_main_menu"
                   web_icon="hr_custody,static/description/custody_icon.png"
                   name="Custody" sequence="20"/>
@@ -286,9 +323,13 @@
         <menuitem action="action_hr_custody" id="hr_custody_menu" parent="hr_custody.hr_custody_main_menu"
                   name="Custody Request" sequence="1"/>
 
-        <menuitem action="action_hr_property" id="hr_property_menu" parent="hr_custody.hr_custody_main_menu"
-                  name="Property" sequence="5" groups="hr.group_hr_manager,hr_custody.group_custody_property_admin"/>
-
+        <menuitem id="hr_property_menu" groups="hr.group_hr_manager,hr_custody.group_custody_property_admin" name="Property" sequence="5"
+                parent="hr_custody.hr_custody_main_menu"
+        />
+        <menuitem action="action_hr_property" id="hr_property_property_menu" parent="hr_custody.hr_property_menu"
+                  name="Property" sequence="1" groups="hr.group_hr_manager,hr_custody.group_custody_property_admin"/>
+        <menuitem action="action_hr_property_type" id="hr_property_type_menu" parent="hr_custody.hr_property_menu"
+                  name="Property Types" sequence="2" groups="hr.group_hr_manager,hr_custody.group_custody_property_admin"/>
 
         <menuitem action="action_hr_property_scrap" id="hr_scrap_menu" parent="hr_custody.hr_custody_main_menu"
                   name="Scraps" sequence="6" groups="hr.group_hr_manager"/>

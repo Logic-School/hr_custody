@@ -132,9 +132,13 @@ class HrCustody(models.Model):
                                states={'draft': [('readonly', False)]})
     purpose = fields.Char(string='Reason', track_visibility='always', readonly=True, help="Reason",
                           states={'draft': [('readonly', False)]})
+    
+    property_type = fields.Many2one('custody.property.type',string="Property Type")
+
     custody_name = fields.Many2one('custody.property', string='Property', required=True, readonly=True,
                                    help="Property name",
                                    states={'draft': [('readonly', False)]})
+
     return_date = fields.Date(string='Return Date', required=False, track_visibility='always', readonly=True,
                               help="Return date",
                               states={'draft': [('readonly', False)]})
@@ -152,6 +156,14 @@ class HrCustody(models.Model):
     hr_manager = fields.Many2one('res.users',string="HR Manager",required=True,domain=get_hr_manager_domain)
 
 
+class HrPropertyType(models.Model):
+    _name = "custody.property.type"
+    name = fields.Char(string="Name")
+    property_count = fields.Integer(string="Total Properties", compute="_compute_property_count")
+    
+    def _compute_property_count(self):
+        for record in self:
+            record.property_count = self.env['custody.property'].sudo().search_count([('property_type','=',record.id)])
 
 class HrPropertyName(models.Model):
     """
@@ -161,6 +173,7 @@ class HrPropertyName(models.Model):
     _description = 'Property Name'
 
     name = fields.Char(string='Property Name', required=True)
+    property_type = fields.Many2one('custody.property.type',string="Property Type")
     serial_no = fields.Char(string="Serial No", required=True)
     image = fields.Image(string="Image",
                          help="This field holds the image used for this provider, limited to 1024x1024px")

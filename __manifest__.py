@@ -31,7 +31,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.openhrms.com",
-    'depends': ['hr', 'mail', 'hr_employee_updation', 'product'],
+    'depends': ['hr', 'mail', 'hr_employee_updation', 'product','logic_performance_tracker'],
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',

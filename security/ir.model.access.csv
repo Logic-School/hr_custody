@@ -12,9 +12,9 @@
 "access_hr_custody_hr_employee2","hr.custody.employee2","model_wizard_return_date","base.group_user",1,1,1,0
 "access_wizard_reason","hr.wizard.reason","model_wizard_reason","hr.group_hr_manager",1,1,1,1
 
-
 "access_hr_custody_report_prop_admin","access_hr_custody_report_prop_admin","model_report_custody","hr_custody.group_custody_property_admin",1,1,1,1
 "access_property_property_admin","access_property_property_admin","model_custody_property","hr_custody.group_custody_property_admin",1,1,1,1
+
 access_repair_property_admin, access_repair_property_admin,model_custody_property_repair,hr_custody.group_custody_property_admin,1,1,1,1
 access_repair_wizard_property_admin,access_repair_wizard_property_admin,model_property_repair_wizard,hr_custody.group_custody_property_admin,1,1,1,0
 
@@ -24,3 +24,7 @@ access_scrap_wizard_hr_manager, access_scrap_wizard_hr_manager,model_property_sc
 
 access_class_room_assets, access_class_room_assets,model_class_room_assets,hr.group_hr_manager,1,1,1,0
 access_class_room_assets_admin, access_class_room_assets,model_class_room_assets,group_custody_property_admin,1,1,1,0
+
+"access_hr_custody_property_type_employee","access_hr_custody_property_type_employee","model_custody_property_type","base.group_user",1,0,0,0
+"access_hr_custody_property_type_hr_manager","access_hr_custody_property_type_hr_manager","model_custody_property_type","hr.group_hr_manager",1,1,1,1
+"access_property_property_type_admin","access_property_property_type_admin","model_custody_property_type","hr_custody.group_custody_property_admin",1,1,1,1
